@@ -8,6 +8,9 @@ app.use(cors());
 
 app.use(logger('dev'))
 
+const snacksController = require("./controllers/snacksController.js");
+app.use("/snacks", snacksController);
+
 app.get(("/"), ( req, res ) => {
     res.send("welcome to the snacks")
 });
