@@ -1,4 +1,4 @@
-const checkName = (req, res, next) => {
+const checkSnackName = (req, res, next) => {
     if (req.body.name) {
       next()
     } else {
@@ -7,4 +7,4 @@ const checkName = (req, res, next) => {
   };
   
 
-  module.exports = { checkName };
+  module.exports = { checkSnackName };
