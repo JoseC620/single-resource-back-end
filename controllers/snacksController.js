@@ -36,7 +36,7 @@ snacks.post('/', async (req, res) => {
 snacks.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const removed = await deleteSnack(id);
-    if(deleteSnack.id) {
+    if(removed) {
         res.status(200).json(removed);
     } else {
         res.status(404).json({ error: "Sorry! Snack was not found" });
@@ -45,10 +45,9 @@ snacks.delete('/:id', async (req, res) => {
 
 snacks.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { body } = req;
 
     try {
-        const updated = await updateSnack(id, body);
+        const updated = await updateSnack(id, req.body);
         res.status(200).json(updated);
     } catch (error){
         res.status(400).json({ error: "Sorry! Snack could not be updated" });
