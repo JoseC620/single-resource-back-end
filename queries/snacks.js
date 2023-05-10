@@ -1,4 +1,3 @@
-const snacks = require("../controllers/snacksController.js");
 const db = require("../db/dbConfig.js");
 
 
@@ -42,10 +41,11 @@ const deleteSnack = async (id) => {
 const updateSnack = async (id, snack) => {
 
   try {
-      const updated = await db.one("UPDATE snacks SET name=$1, image=$2, category=$3, protein=$4, fiber=$5, sugar=$6, serving_size=$7, is_healthy=$8 WHERE id=$9 RETURNING *",
-      [snack.name, snack.image, snack.category, snack.protein, snack.fiber, snack.sugar, snack.serving_size, snack.is_healthy, id]);
-      
-      return updated;
+      const updatedSnack = await db.any(
+      "UPDATE snacks SET name=$1, image=$2, category=$3, protein=$4, fiber=$5, sugar=$6, serving_size=$7, is_healthy=$8 where id=$9 RETURNING *",
+      [snack.name, snack.image, snack.category, snack.protein, snack.fiber, snack.sugar, snack.serving_size, snack.is_healthy, id]
+      );
+      return updatedSnack;
   } catch (error) {
       return error;
   };
