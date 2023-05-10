@@ -45,13 +45,12 @@ snacks.delete('/:id', async (req, res) => {
 
 snacks.put('/:id', async (req, res) => {
     const { id } = req.params;
-
-    try {
-        const updated = await updateSnack(id, req.body);
-        res.status(200).json(updated);
-    } catch (error){
-        res.status(400).json({ error: "Sorry! Snack could not be updated" });
-    }
+    // try {
+        const updatedSnack = await updateSnack(id, req.body);
+        res.status(200).json(updatedSnack);
+    // } catch (error){
+    //     res.status(400).json({ error: "Sorry! Snack could not be updated" });
+    // }
 });
 
 
