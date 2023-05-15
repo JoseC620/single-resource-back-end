@@ -1,6 +1,7 @@
 const express = require("express");
 const snacks = express.Router();
 const { getAllSnacks, getSnack, createSnack, deleteSnack, updateSnack } = require('../queries/snacks');
+const { checkSnackName } = require("../validations/checkSnacks");
 
 snacks.get("/", async ( req, res ) => {
     const allSnacks = await getAllSnacks();
@@ -22,9 +23,8 @@ snacks.get('/:id', async (req, res) => {
     }
 });
 
-snacks.post('/', async (req, res) => {
+snacks.post('/', checkSnackName, async (req, res) => {
     const newSnack = req.body;
-
     try {
         const addedSnack = await createSnack(newSnack);
         res.status(200).json(addedSnack)
@@ -43,14 +43,14 @@ snacks.delete('/:id', async (req, res) => {
     }
 });
 
-snacks.put('/:id', async (req, res) => {
+snacks.put('/:id', checkSnackName, async (req, res) => {
     const { id } = req.params;
-    // try {
+    try {
         const updatedSnack = await updateSnack(id, req.body);
         res.status(200).json(updatedSnack);
-    // } catch (error){
-    //     res.status(400).json({ error: "Sorry! Snack could not be updated" });
-    // }
+    } catch (error){
+        res.status(400).json({ error: "Sorry! Snack could not be updated" });
+    }
 });
 
 
